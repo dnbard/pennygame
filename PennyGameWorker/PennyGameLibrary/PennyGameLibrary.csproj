@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\BaseDAL.cs" />
+    <Compile Include="Database\GamesDAL.cs" />
     <Compile Include="Database\ServerCredentials.cs" />
     <Compile Include="Parser\BaseParser.cs" />
     <Compile Include="Parser\Game.cs" />

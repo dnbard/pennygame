@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CsQuery;
+using PennyGameLibrary.Database;
 using PennyGameLibrary.Utility;
 
 namespace PennyGameLibrary.Parser
@@ -68,6 +69,7 @@ namespace PennyGameLibrary.Parser
                     }
                 });
             Logger.Write("Steam sale on {0} items; {1} added", titles.Count(), games.Count);
+            GamesDal.SaveGamesListWithDrop(games);
         }
     }
 }
