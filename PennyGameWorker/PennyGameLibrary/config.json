@@ -1,0 +1,6 @@
+﻿{
+Server: 'localhost',
+Database: 'pennygame',
+Uid: 'localhost',
+Password: ''
+}
