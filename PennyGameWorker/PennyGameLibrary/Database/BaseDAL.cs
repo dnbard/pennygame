@@ -70,7 +70,7 @@ namespace PennyGameLibrary.Database
             }
         }
 
-        private static MySqlCommand PrepareCommand(string commandText, Dictionary<string, string> _params = null)
+        private static MySqlCommand PrepareCommand(string commandText, Dictionary<string, object> _params = null)
         {
             var cmd = new MySqlCommand();
             cmd.Connection = _connection;
@@ -84,7 +84,7 @@ namespace PennyGameLibrary.Database
             return cmd;
         }
 
-        protected static bool ExecuteNonQuery(string commandText, Dictionary<string, string> _params = null)
+        protected static bool ExecuteNonQuery(string commandText, Dictionary<string, object> _params = null)
         {
             var result = false;
             try
@@ -105,7 +105,7 @@ namespace PennyGameLibrary.Database
             return result;
         }
 
-        protected static MySqlDataReader ExecuteQuery(string commandText, Dictionary<string, string> _params = null)
+        protected static MySqlDataReader ExecuteQuery(string commandText, Dictionary<string, object> _params = null)
         {
             MySqlDataReader result = null;
             try
