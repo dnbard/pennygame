@@ -15,7 +15,7 @@ namespace PennyGameLibrary.Parser
         public string Price { get; set; }
         public string SalePrice { get; set; }
         public string Type { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public string ImageUrl { get; set; }
         public string Store { get; set; }
     }

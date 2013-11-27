@@ -45,7 +45,7 @@ namespace PennyGameLibrary.Parser
                     var image = "http:" + CQ.CreateFragment(element.Attr("data-title")).Select("img").Attr("src");
 
                     var untilRaw = element.Select("td:nth-child(2) span");
-                    var untilDate = new DateTime(0);
+                    var untilDate = default(DateTime);
                     if (untilRaw.Any())
                         DateTime.TryParse(untilRaw.Attr("title"), out untilDate);
 
@@ -56,7 +56,6 @@ namespace PennyGameLibrary.Parser
                                 Name = name,
                                 InternalLink = link,
                                 Link = steamLink,
-                                Date = untilDate,
                                 Discount = discount,
                                 Price = initialPrice,
                                 SalePrice = salePrice, 
@@ -65,6 +64,7 @@ namespace PennyGameLibrary.Parser
                                 Store = "Steam"
                             };
 
+                        if (untilDate != default(DateTime)) game.Date = untilDate;
                         games.Add(game.Name, game);
                     }
                 });
