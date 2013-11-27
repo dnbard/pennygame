@@ -47,7 +47,6 @@ namespace PennyGameLibrary.Parser
                 Logger.Write("Parser queue is empty");
             } else
             {
-
                 var doc = CQ.CreateFromUrl(url);
             }
         }

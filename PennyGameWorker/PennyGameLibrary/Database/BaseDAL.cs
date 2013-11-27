@@ -45,11 +45,11 @@ namespace PennyGameLibrary.Database
                 switch (ex.Number)
                 {
                     case 0:
-                        Logger.Write("Cannot connect to server.  Contact administrator");
+                        Logger.WriteError("Cannot connect to server.  Contact administrator");
                         break;
 
                     case 1045:
-                        Logger.Write("Invalid username/password, please try again");
+                        Logger.WriteError("Invalid username/password, please try again");
                         break;
                 }
                 return false;
@@ -65,7 +65,7 @@ namespace PennyGameLibrary.Database
             }
             catch (MySqlException ex)
             {
-                Logger.Write(ex.Message);
+                Logger.WriteError(ex.Message);
                 return false;
             }
         }
@@ -96,7 +96,7 @@ namespace PennyGameLibrary.Database
             }
             catch (MySqlException ex)
             {
-                Logger.Write(ex.Message);
+                Logger.WriteError(ex.Message);
             }
             finally
             {
@@ -116,24 +116,10 @@ namespace PennyGameLibrary.Database
             }
             catch (MySqlException ex)
             {
-                Logger.Write(ex.Message);
+                Logger.WriteError(ex.Message);
             }
 
             return result;
-        }
-
-        public static void SelectOne()
-        {
-            var reader = ExecuteQuery("SELECT 1 AS ID");
-
-            reader.Read();
-            Logger.Write("Done. Result = " + reader["ID"]);
-            CloseConnection();
-
-            reader = ExecuteQuery("SELECT 1 AS ID");
-            reader.Read();
-            Logger.Write("Done. Result = " + reader["ID"]);
-            CloseConnection();
         }
     }
 }

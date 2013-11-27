@@ -4,41 +4,66 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PennyGameLibrary.Parser;
+using PennyGameLibrary.Utility;
 
 namespace PennyGameLibrary.Database
 {
-    class GamesDal: BaseDal
+    class GamesDal : BaseDal
     {
-        public static bool SaveGamesListWithDrop(Dictionary<string, Game> games)
+        public static void SaveGamesListWithDrop(Dictionary<string, Game> games)
         {
-            if (games.Count == 0) return false;
+            if (games.Count == 0) return;
             var store = games.First().Value.Store;
 
             if (!ExecuteNonQuery("DELETE FROM gamesale WHERE store=@store",
                 new Dictionary<string, object>() {
-                    {"@store", store}})) 
-                return false;
-            
+                    {"@store", store}}))
+                return;
+
+            AddListToDatabase(games);
+            Logger.Write("{0} gamesale items were added", games.Count);
+        }
+
+        public static void SaveGamesList(Dictionary<string, Game> games)
+        {
+            if (games.Count == 0) return;
+            AddListToDatabase(games);
+            Logger.Write("{0} gamesale items were added", games.Count);
+        }
+
+        public static void SaveGame(Game game)
+        {
+            if (game == null) return;
+            AddGameToDatabase(game);
+            Logger.Write("1 gamesale item were added");
+        }
+
+        private static void AddListToDatabase(Dictionary<string, Game> games)
+        {
             foreach (var game in games)
             {
                 //TODO: Modify to use MySQL Transactions
                 var self = game.Value;
-                ExecuteNonQuery("INSERT INTO gamesale (type, name, link, internalLink, discount, price, salePrice, date, imageUrl, store)" +
+                AddGameToDatabase(self);
+            }
+        }
+
+        private static void AddGameToDatabase(Game game)
+        {
+            ExecuteNonQuery("INSERT INTO gamesale (type, name, link, internalLink, discount, price, salePrice, date, imageUrl, store)" +
                                 "VALUES(@type, @name, @link, @ilink, @discount, @price, @sprice, @date, @image, @store)",
                 new Dictionary<string, object>() {
-                    {"@type", self.Type},
-                    {"@name", self.Name},
-                    {"@link", self.Link}, 
-                    {"@ilink", self.InternalLink}, 
-                    {"@discount", self.Discount}, 
-                    {"@price", self.Price}, 
-                    {"@sprice", self.SalePrice}, 
-                    {"@date", self.Date}, 
-                    {"@image", self.ImageUrl}, 
-                    {"@store", self.Store}
-                });    
-            }
-            return true;
-        }
+                    {"@type", game.Type},
+                    {"@name", game.Name},
+                    {"@link", game.Link}, 
+                    {"@ilink", game.InternalLink}, 
+                    {"@discount", game.Discount}, 
+                    {"@price", game.Price}, 
+                    {"@sprice", game.SalePrice}, 
+                    {"@date", game.Date}, 
+                    {"@image", game.ImageUrl}, 
+                    {"@store", game.Store}
+                });
+        }        
     }
 }

@@ -25,7 +25,7 @@ namespace PennyGameLibrary.Parser
             }
             catch (Exception ex)
             {
-                Logger.Write(ex.Message);
+                Logger.WriteError(ex.Message);
             }
         }
 

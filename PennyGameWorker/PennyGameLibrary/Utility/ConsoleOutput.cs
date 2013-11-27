@@ -12,5 +12,13 @@ namespace PennyGameLibrary.Utility
         {
             Console.WriteLine("{0} # {1}",FormatDate(), data);
         }
+
+        public override void WriteError(string data)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;           
+            Console.WriteLine("{0} # {1}", FormatDate(), data);
+            Console.ResetColor();
+        }
     }
 }

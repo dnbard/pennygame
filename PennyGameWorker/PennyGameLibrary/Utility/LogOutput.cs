@@ -16,6 +16,7 @@ namespace PennyGameLibrary.Utility
         }
 
         public abstract void Write(string data);
+        public abstract void WriteError(string data);
     }
 
 }

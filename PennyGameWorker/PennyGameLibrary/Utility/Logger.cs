@@ -26,5 +26,16 @@ namespace PennyGameLibrary.Utility
             var str = string.Format(format, p);
             Write(str);
         }
+
+        public static void WriteError(string data)
+        {
+            Instance.channels.ForEach(ch => ch.WriteError(data));
+        }
+
+        public static void WriteError(string format, params object[] p)
+        {
+            var str = string.Format(format, p);
+            WriteError(str);
+        }
     }
 }

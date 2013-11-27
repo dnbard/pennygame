@@ -23,7 +23,7 @@ namespace PennyGameLibrary.Parser
             }
             catch (Exception ex)
             {
-                Logger.Write(ex.Message);
+                Logger.WriteError(ex.Message);
             }
         }
 
@@ -37,8 +37,11 @@ namespace PennyGameLibrary.Parser
                     var name = element.Select("a:nth-child(2)").Text();
                     var steamLink = element.Select("a:nth-child(2)").Attr("href");
                     var link = "http://steamdb.info/" + element.Select("a:nth-child(1)").Attr("href");
+                    
+                    //check discount field. it sometimes aren't parsed.
                     var discount = element.Find(".price-discount").Text();
                     discount = element.Find(".price-discount-minor").Text();
+                    
                     var initialPrice = element.Find(".price-initial").Text();
                     var salePrice = element.Select("td:nth-child(5)").Text();
                     var type = element.Select("td:nth-child(1)").Text();
@@ -68,7 +71,7 @@ namespace PennyGameLibrary.Parser
                         games.Add(game.Name, game);
                     }
                 });
-            Logger.Write("Steam sale on {0} items; {1} added", titles.Count(), games.Count);
+            Logger.Write("Steam sale on {0} items; {1} going to be added", titles.Count(), games.Count);
             GamesDal.SaveGamesListWithDrop(games);
         }
     }
