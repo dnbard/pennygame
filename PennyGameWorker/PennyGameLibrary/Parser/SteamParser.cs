@@ -48,7 +48,15 @@ namespace PennyGameLibrary.Parser
                     var initialPrice = element.Find(".price-initial").Text();
                     var salePrice = element.Select("td:nth-child(5)").Text();
                     var type = element.Select("td:nth-child(1)").Text();
-                    var image = "http:" + CQ.CreateFragment(element.Attr("data-title")).Select("img").Attr("src");
+                    var imagePart = CQ.CreateFragment(element.Attr("data-title")).Select("img").Attr("src");
+                    var image = "http:" + imagePart;
+                    if (string.IsNullOrWhiteSpace(imagePart))
+                    {
+                        var steamId = element.Attr("data-appid");
+                        if (!string.IsNullOrWhiteSpace(steamId))
+                            image = string.Format("http://cdn4.steampowered.com/v/gfx/apps/{0}/header_292x136.jpg",
+                                                  steamId);
+                    }
 
                     var untilRaw = element.Select("td:nth-child(2) span");
                     var untilDate = default(DateTime);
