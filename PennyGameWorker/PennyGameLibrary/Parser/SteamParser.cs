@@ -36,11 +36,14 @@ namespace PennyGameLibrary.Parser
                     var element = CQ.Create(e);
                     var name = element.Select("a:nth-child(2)").Text();
                     var steamLink = element.Select("a:nth-child(2)").Attr("href");
-                    var link = "http://steamdb.info/" + element.Select("a:nth-child(1)").Attr("href");
+                    var link = "http://steamdb.info" + element.Select("a:nth-child(1)").Attr("href");
                     
                     //check discount field. it sometimes aren't parsed.
                     var discount = element.Find(".price-discount").Text();
-                    discount = element.Find(".price-discount-minor").Text();
+                    if (string.IsNullOrWhiteSpace(discount))
+                        discount = element.Find(".price-discount-minor").Text();
+                    if (string.IsNullOrWhiteSpace(discount))
+                        discount = element.Find(".price-discount-major").Text();
                     
                     var initialPrice = element.Find(".price-initial").Text();
                     var salePrice = element.Select("td:nth-child(5)").Text();
